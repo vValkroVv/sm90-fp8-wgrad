@@ -1,0 +1,14 @@
+# Install into an existing Python 3.12+ CUDA/PyTorch venv with --no-deps when possible.
+# Letting pip replace torch or CUDA packages can invalidate benchmark results.
+einops
+numpy
+ninja
+typing-extensions
+cuda-python
+apache-tvm-ffi>=0.1.6,<0.2
+nvidia-cutlass-dsl-libs-base==4.4.2
+nvidia-cutlass-dsl==4.4.2
+torch-c-dlpack-ext==0.1.5
+quack-kernels==0.4.0
+sonic-moe==0.1.2.post1
+deep_gemm @ git+https://github.com/deepseek-ai/DeepGEMM.git@88965b078186ee7510ab9fc4f1d5ebc19adfa8d1
