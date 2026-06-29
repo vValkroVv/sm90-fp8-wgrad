@@ -178,6 +178,26 @@ python scripts/sweep_seq_lens.py \
 cat artifacts/seq_sweep/summary.md
 ```
 
+## dense matmul sanity benchmark
+
+This is a plain cuBLAS/PyTorch `C=A@B` check. It is not grouped Wgrad. Use it
+to see the dense GEMM TFLOP/s available on the same GPU and environment.
+
+```bash
+python scripts/benchmark_dense_matmul.py \
+  --sizes 8192,16384,32768 \
+  --dtype bf16 \
+  --warmup-iters 20 \
+  --active-iters 100 \
+  --repeat 3 \
+  --output-dir artifacts/dense_matmul_bf16
+
+cat artifacts/dense_matmul_bf16/summary.md
+```
+
+The script counts FLOPs as `2 * M * N * K` and reports lower-bound HBM bytes
+as `A read + B read + C write`.
+
 ## full model-shape matrix
 
 This is the command used for the public result block. It runs Sonic/custom
@@ -278,6 +298,7 @@ Sequence and matrix output:
 <output-dir>/matrix_runs.tsv
 <output-dir>/results_for_readme.md
 <output-dir>/results_flat.csv
+<output-dir>/results.json                  # dense matmul and single-shape runs
 <output-dir>/<model>/ep<EP>/<route>/sonic_custom/results.json
 <output-dir>/<model>/ep<EP>/<route>/deepgemm/results.json
 <output-dir>/<model>/ep<EP>/<route>/*/logs/*.error.log
