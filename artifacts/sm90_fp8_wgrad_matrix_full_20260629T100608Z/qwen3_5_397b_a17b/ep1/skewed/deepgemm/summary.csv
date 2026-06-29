@@ -1,0 +1,11 @@
+tokens,token_label,case,case_label,status,valid_rows,padded_rows,down_ms,gate_up_ms,total_ms,speed_vs_sonic,total_valid_tflops,gpu_memory_peak_gb,gpu_memory_peak_bytes,down_deepseek_calc_diff,gate_up_deepseek_calc_diff,max_deepseek_calc_diff,correctness_status,run_dir,results_json,summary_json,log_path,error_log_path,error_tail
+4096,4k,deepgemm_fp8,DeepGEMM FP8,ok,40960,93696,15.123661458333334,30.201123958333334,45.324785416666664,,22.74235038432109,37.617210368,37617210368,0.0005365063778028922,6.408544472868982e-09,0.0005365063778028922,deepseek_calc_diff_ok,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_4k_deepgemm_fp8,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_4k_deepgemm_fp8/results.json,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_4k_deepgemm_fp8/summary.json,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_4k_deepgemm_fp8/run.log,,
+8192,8k,deepgemm_fp8,DeepGEMM FP8,failed,81920,128000,,,,,,22.18735104,22187351040,,,,,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/results.json,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/summary.json,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/run.log,artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/logs/deepgemm_fp8.error.log,"Traceback (most recent call last):
+  File ""sm90-fp8-wgrad/scripts/benchmark_wgrad.py"", line 744, in run_one_case
+    down_fn()
+  File ""sm90-fp8-wgrad/scripts/benchmark_wgrad.py"", line 736, in <lambda>
+    down_fn = lambda: run_deepgemm_wgrad(
+                      ^^^^^^^^^^^^^^^^^^^
+  File ""sm90-fp8-wgrad/src/sm90_fp8_wgrad/deepgemm_baseline.py"", line 83, in run_deepgemm_wgrad
+    fn(
+RuntimeError: CUDA driver error (csrc/apis/../jit_kernels/impls/../../jit/handle.hpp:178): 1 (CUDA_ERROR_INVALID_VALUE, invalid argument)"

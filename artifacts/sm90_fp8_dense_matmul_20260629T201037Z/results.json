@@ -1,0 +1,127 @@
+{
+  "command": [
+    "fp8-cu13-venv/bin/python",
+    "scripts/benchmark_dense_matmul.py",
+    "--sizes",
+    "8192,16384,32768",
+    "--dtype",
+    "bf16",
+    "--warmup-iters",
+    "200",
+    "--active-iters",
+    "2000",
+    "--repeat",
+    "3",
+    "--output-dir",
+    "artifacts/sm90_fp8_dense_matmul_20260629T201037Z"
+  ],
+  "created_at": "2026-06-29T20:40:09.712667+00:00",
+  "env": {
+    "capability0": [
+      9,
+      0
+    ],
+    "cuda_available": true,
+    "gpu0": "NVIDIA H100 80GB HBM3",
+    "packages": {
+      "triton": "3.7.0"
+    },
+    "python": "3.12.12 (main, Jan 16 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-14)]",
+    "torch": "2.12.0+cu130",
+    "torch_cuda": "13.0"
+  },
+  "flop_formula": "2 * M * N * K",
+  "hbm_lower_bound": "A read + B read + C write",
+  "metric": "dense_matmul_tflops",
+  "output_paths": {
+    "output_dir": "artifacts/sm90_fp8_dense_matmul_20260629T201037Z",
+    "results_csv": "artifacts/sm90_fp8_dense_matmul_20260629T201037Z/results.csv",
+    "results_json": "artifacts/sm90_fp8_dense_matmul_20260629T201037Z/results.json",
+    "summary_json": "artifacts/sm90_fp8_dense_matmul_20260629T201037Z/summary.json",
+    "summary_md": "artifacts/sm90_fp8_dense_matmul_20260629T201037Z/summary.md"
+  },
+  "results": [
+    {
+      "active_iters": 2000,
+      "arithmetic_intensity_flops_per_byte": 2730.6666666666665,
+      "best_tflops": 321.40177511554583,
+      "dtype": "bf16",
+      "dtype_label": "BF16",
+      "flops": 1099511627776.0,
+      "gpu_memory_allocated_gb": 0.436207616,
+      "gpu_memory_peak_gb": 0.436207616,
+      "hbm_bytes_lower_bound": 402653184.0,
+      "k": 8192,
+      "m": 8192,
+      "max_ms": 3.455780029296875,
+      "mean_ms": 3.435214274088542,
+      "mean_tflops": 320.0707554313278,
+      "min_ms": 3.420988037109375,
+      "n": 8192,
+      "repeat": 3,
+      "samples_ms": [
+        3.428874755859375,
+        3.455780029296875,
+        3.420988037109375
+      ],
+      "status": "ok",
+      "warmup_iters": 200,
+      "worst_tflops": 318.1659765536959
+    },
+    {
+      "active_iters": 2000,
+      "arithmetic_intensity_flops_per_byte": 5461.333333333333,
+      "best_tflops": 316.58407104334526,
+      "dtype": "bf16",
+      "dtype_label": "BF16",
+      "flops": 8796093022208.0,
+      "gpu_memory_allocated_gb": 1.644167168,
+      "gpu_memory_peak_gb": 1.644167168,
+      "hbm_bytes_lower_bound": 1610612736.0,
+      "k": 16384,
+      "m": 16384,
+      "max_ms": 29.100564453125,
+      "mean_ms": 28.59549934895833,
+      "mean_tflops": 307.60410632690775,
+      "min_ms": 27.7843828125,
+      "n": 16384,
+      "repeat": 3,
+      "samples_ms": [
+        27.7843828125,
+        28.90155078125,
+        29.100564453125
+      ],
+      "status": "ok",
+      "warmup_iters": 200,
+      "worst_tflops": 302.2653748306735
+    },
+    {
+      "active_iters": 2000,
+      "arithmetic_intensity_flops_per_byte": 10922.666666666666,
+      "best_tflops": 297.8752231944849,
+      "dtype": "bf16",
+      "dtype_label": "BF16",
+      "flops": 70368744177664.0,
+      "gpu_memory_allocated_gb": 6.476005376,
+      "gpu_memory_peak_gb": 6.476005376,
+      "hbm_bytes_lower_bound": 6442450944.0,
+      "k": 32768,
+      "m": 32768,
+      "max_ms": 236.796625,
+      "mean_ms": 236.52885416666666,
+      "mean_tflops": 297.5059614844271,
+      "min_ms": 236.235640625,
+      "n": 32768,
+      "repeat": 3,
+      "samples_ms": [
+        236.554296875,
+        236.796625,
+        236.235640625
+      ],
+      "status": "ok",
+      "warmup_iters": 200,
+      "worst_tflops": 297.16954022323586
+    }
+  ],
+  "status": "ok"
+}

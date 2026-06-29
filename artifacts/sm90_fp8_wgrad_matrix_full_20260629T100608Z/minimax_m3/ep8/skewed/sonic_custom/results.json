@@ -1,0 +1,835 @@
+{
+  "command": [
+    "fp8-cu13-venv/bin/python",
+    "sm90-fp8-wgrad/scripts/sweep_seq_lens.py",
+    "--tokens-list",
+    "4096,8192,16384,32768",
+    "--experts",
+    "16",
+    "--top-k",
+    "4",
+    "--hidden",
+    "6144",
+    "--intermediate",
+    "3072",
+    "--route",
+    "skewed",
+    "--seed",
+    "1234",
+    "--warmup-iters",
+    "500",
+    "--active-iters",
+    "5000",
+    "--repeat",
+    "3",
+    "--custom-layout-mode",
+    "padded",
+    "--custom-tuned-config",
+    "default",
+    "--deepseek-diff-gate",
+    "0.001",
+    "--output-dir",
+    "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom",
+    "--results-json",
+    "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/results.json",
+    "--include-sonic",
+    "--include-custom",
+    "--no-include-deepgemm",
+    "--isolate-cases"
+  ],
+  "created_at": "2026-06-29T17:04:24.063202+00:00",
+  "deepgemm_metric": "deep_gemm.testing.calc_diff",
+  "deepseek_diff_gate": 0.001,
+  "execution_mode": "isolated_per_case_process",
+  "output_paths": {
+    "output_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom",
+    "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/results.json",
+    "summary_csv": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/summary.csv",
+    "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/summary.json",
+    "summary_md": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/summary.md"
+  },
+  "require_deepgemm_calc_diff": true,
+  "rows": [
+    {
+      "case": "sonic_bf16",
+      "case_label": "Sonic BF16",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 2.4326185510403775e-09
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 9.009094581458044e-09
+        },
+        "max_deepseek_calc_diff": 9.009094581458044e-09,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "bf16_grouped_source",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "down_deepseek_calc_diff": 2.4326185510403775e-09,
+      "down_min_ms": 1.7007205078125,
+      "down_ms": 1.71262109375,
+      "down_valid_tflops": 361.1279184175936,
+      "error_tail": "",
+      "finite": {
+        "sonic_dw1": true,
+        "sonic_dw2": true
+      },
+      "gate_up_deepseek_calc_diff": 9.009094581458044e-09,
+      "gate_up_min_ms": 4.250020703125,
+      "gate_up_ms": 4.3610716145833335,
+      "gate_up_valid_tflops": 283.63454915797826,
+      "gpu_memory_peak_bytes": 3313574912,
+      "gpu_memory_peak_gb": 3.313574912,
+      "implementation_provenance": {
+        "case": "sonic_bf16",
+        "module_paths": {
+          "quack": "fp8-cu13-venv/lib64/python3.12/site-packages/quack/__init__.py",
+          "sonicmoe": "fp8-cu13-venv/lib64/python3.12/site-packages/sonicmoe/__init__.py"
+        },
+        "packages": {
+          "quack-kernels": "0.4.0",
+          "sonic-moe": "0.1.2.post1"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_4k_sonic_bf16/run.log",
+      "max_deepseek_calc_diff": 9.009094581458044e-09,
+      "max_rows_per_expert": 5767,
+      "median_rows_per_expert": 522,
+      "min_rows_per_expert": 228,
+      "padded_rows": 17280,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_4k_sonic_bf16/results.json",
+      "route_stats": {
+        "experts": 16,
+        "max_rows_per_expert": 5767,
+        "median_rows_per_expert": 522,
+        "min_rows_per_expert": 228,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 17280,
+        "padding_overhead_ratio": 1.0546875,
+        "tma_rows": 17280,
+        "total_blocks": 135,
+        "valid_rows": 16384,
+        "wgmma_rows": 16672
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_4k_sonic_bf16",
+      "speed_vs_sonic": 1.0,
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_4k_sonic_bf16/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          1.7007205078125,
+          1.7169876953125,
+          1.720155078125
+        ],
+        "gate_up": [
+          4.250020703125,
+          4.379715625,
+          4.453478515625
+        ],
+        "total": [
+          6.67499140625,
+          6.684915625,
+          6.69335625
+        ]
+      },
+      "token_label": "4k",
+      "tokens": 4096,
+      "total_min_ms": 6.67499140625,
+      "total_ms": 6.68442109375,
+      "total_p90_ms": 6.69335625,
+      "total_p95_ms": 6.69335625,
+      "total_std_ms": 0.007505566483546096,
+      "total_valid_tflops": 277.57465393777204,
+      "valid_rows": 16384,
+      "verdict": "ok"
+    },
+    {
+      "case": "custom_cute_fp8_bf16_out",
+      "case_label": "Custom CuTe FP8 BF16-out",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 2.42219295953916e-07
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 2.3014897987394534e-07
+        },
+        "max_deepseek_calc_diff": 2.42219295953916e-07,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "down_deepseek_calc_diff": 2.42219295953916e-07,
+      "down_min_ms": 1.49154111328125,
+      "down_ms": 1.492001953125,
+      "down_valid_tflops": 414.5271320379995,
+      "error_tail": "",
+      "finite": {
+        "custom_down": true,
+        "custom_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 2.3014897987394534e-07,
+      "gate_up_min_ms": 2.9168533203125,
+      "gate_up_ms": 2.9189786458333336,
+      "gate_up_valid_tflops": 423.76143553282674,
+      "gpu_memory_peak_bytes": 3421193216,
+      "gpu_memory_peak_gb": 3.421193216,
+      "implementation_provenance": {
+        "case": "custom_cute_fp8_bf16_out",
+        "custom_layout_mode": "padded",
+        "custom_tuned_config": "default",
+        "module_paths": {
+          "quack": "fp8-cu13-venv/lib64/python3.12/site-packages/quack/__init__.py"
+        },
+        "packages": {
+          "cuda-python": "<missing>",
+          "nvidia-cutlass-dsl": "4.4.2",
+          "quack-kernels": "0.4.0"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_4k_custom_cute_fp8_bf16_out/run.log",
+      "max_deepseek_calc_diff": 2.42219295953916e-07,
+      "max_rows_per_expert": 5767,
+      "median_rows_per_expert": 522,
+      "min_rows_per_expert": 228,
+      "padded_rows": 17280,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_4k_custom_cute_fp8_bf16_out/results.json",
+      "route_stats": {
+        "experts": 16,
+        "max_rows_per_expert": 5767,
+        "median_rows_per_expert": 522,
+        "min_rows_per_expert": 228,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 17280,
+        "padding_overhead_ratio": 1.0546875,
+        "tma_rows": 17280,
+        "total_blocks": 135,
+        "valid_rows": 16384,
+        "wgmma_rows": 16672
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_4k_custom_cute_fp8_bf16_out",
+      "speed_vs_sonic": 1.5143235864419535,
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_4k_custom_cute_fp8_bf16_out/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          1.49154111328125,
+          1.49160224609375,
+          1.4928625
+        ],
+        "gate_up": [
+          2.9168533203125,
+          2.9195927734375,
+          2.92048984375
+        ],
+        "total": [
+          4.409004296875,
+          4.413353515625,
+          4.42003203125
+        ]
+      },
+      "token_label": "4k",
+      "tokens": 4096,
+      "total_min_ms": 4.409004296875,
+      "total_ms": 4.414129947916667,
+      "total_p90_ms": 4.42003203125,
+      "total_p95_ms": 4.42003203125,
+      "total_std_ms": 0.004535406390394524,
+      "total_valid_tflops": 420.337845456431,
+      "valid_rows": 16384,
+      "verdict": "ok"
+    },
+    {
+      "case": "sonic_bf16",
+      "case_label": "Sonic BF16",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 2.0232837405487203e-08
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 1.8843250071398643e-08
+        },
+        "max_deepseek_calc_diff": 2.0232837405487203e-08,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "bf16_grouped_source",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "down_deepseek_calc_diff": 2.0232837405487203e-08,
+      "down_min_ms": 4.066438671875,
+      "down_ms": 4.16686171875,
+      "down_valid_tflops": 296.8542430102691,
+      "error_tail": "",
+      "finite": {
+        "sonic_dw1": true,
+        "sonic_dw2": true
+      },
+      "gate_up_deepseek_calc_diff": 1.8843250071398643e-08,
+      "gate_up_min_ms": 8.57486015625,
+      "gate_up_ms": 8.61794140625,
+      "gate_up_valid_tflops": 287.06404997159177,
+      "gpu_memory_peak_bytes": 4404161536,
+      "gpu_memory_peak_gb": 4.404161536,
+      "implementation_provenance": {
+        "case": "sonic_bf16",
+        "module_paths": {
+          "quack": "fp8-cu13-venv/lib64/python3.12/site-packages/quack/__init__.py",
+          "sonicmoe": "fp8-cu13-venv/lib64/python3.12/site-packages/sonicmoe/__init__.py"
+        },
+        "packages": {
+          "quack-kernels": "0.4.0",
+          "sonic-moe": "0.1.2.post1"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_8k_sonic_bf16/run.log",
+      "max_deepseek_calc_diff": 2.0232837405487203e-08,
+      "max_rows_per_expert": 11572,
+      "median_rows_per_expert": 1031,
+      "min_rows_per_expert": 427,
+      "padded_rows": 34048,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_8k_sonic_bf16/results.json",
+      "route_stats": {
+        "experts": 16,
+        "max_rows_per_expert": 11572,
+        "median_rows_per_expert": 1031,
+        "min_rows_per_expert": 427,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 34048,
+        "padding_overhead_ratio": 1.0390625,
+        "tma_rows": 34048,
+        "total_blocks": 266,
+        "valid_rows": 32768,
+        "wgmma_rows": 33056
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_8k_sonic_bf16",
+      "speed_vs_sonic": 1.0,
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_8k_sonic_bf16/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          4.066438671875,
+          4.212009765625,
+          4.22213671875
+        ],
+        "gate_up": [
+          8.57486015625,
+          8.60334375,
+          8.6756203125
+        ],
+        "total": [
+          12.8426703125,
+          12.85939609375,
+          12.8644984375
+        ]
+      },
+      "token_label": "8k",
+      "tokens": 8192,
+      "total_min_ms": 12.8426703125,
+      "total_ms": 12.855521614583333,
+      "total_p90_ms": 12.8644984375,
+      "total_p95_ms": 12.8644984375,
+      "total_std_ms": 0.00932292700331166,
+      "total_valid_tflops": 288.6582011214855,
+      "valid_rows": 32768,
+      "verdict": "ok"
+    },
+    {
+      "case": "custom_cute_fp8_bf16_out",
+      "case_label": "Custom CuTe FP8 BF16-out",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 2.3695592255013054e-07
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 2.3812094329667133e-07
+        },
+        "max_deepseek_calc_diff": 2.3812094329667133e-07,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "down_deepseek_calc_diff": 2.3695592255013054e-07,
+      "down_min_ms": 2.76675859375,
+      "down_ms": 2.7696082682291667,
+      "down_valid_tflops": 446.6157165391775,
+      "error_tail": "",
+      "finite": {
+        "custom_down": true,
+        "custom_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 2.3812094329667133e-07,
+      "gate_up_min_ms": 5.50746484375,
+      "gate_up_ms": 5.509284635416667,
+      "gate_up_valid_tflops": 449.0421762913506,
+      "gpu_memory_peak_bytes": 4596911104,
+      "gpu_memory_peak_gb": 4.596911104,
+      "implementation_provenance": {
+        "case": "custom_cute_fp8_bf16_out",
+        "custom_layout_mode": "padded",
+        "custom_tuned_config": "default",
+        "module_paths": {
+          "quack": "fp8-cu13-venv/lib64/python3.12/site-packages/quack/__init__.py"
+        },
+        "packages": {
+          "cuda-python": "<missing>",
+          "nvidia-cutlass-dsl": "4.4.2",
+          "quack-kernels": "0.4.0"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_8k_custom_cute_fp8_bf16_out/run.log",
+      "max_deepseek_calc_diff": 2.3812094329667133e-07,
+      "max_rows_per_expert": 11572,
+      "median_rows_per_expert": 1031,
+      "min_rows_per_expert": 427,
+      "padded_rows": 34048,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_8k_custom_cute_fp8_bf16_out/results.json",
+      "route_stats": {
+        "experts": 16,
+        "max_rows_per_expert": 11572,
+        "median_rows_per_expert": 1031,
+        "min_rows_per_expert": 427,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 34048,
+        "padding_overhead_ratio": 1.0390625,
+        "tma_rows": 34048,
+        "total_blocks": 266,
+        "valid_rows": 32768,
+        "wgmma_rows": 33056
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_8k_custom_cute_fp8_bf16_out",
+      "speed_vs_sonic": 1.5665276139142368,
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_8k_custom_cute_fp8_bf16_out/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          2.76675859375,
+          2.7683173828125,
+          2.773748828125
+        ],
+        "gate_up": [
+          5.50746484375,
+          5.50911171875,
+          5.51127734375
+        ],
+        "total": [
+          8.20438671875,
+          8.207053125,
+          8.2077015625
+        ]
+      },
+      "token_label": "8k",
+      "tokens": 8192,
+      "total_min_ms": 8.20438671875,
+      "total_ms": 8.20638046875,
+      "total_p90_ms": 8.2077015625,
+      "total_p95_ms": 8.2077015625,
+      "total_std_ms": 0.0014344330110368,
+      "total_valid_tflops": 452.19104303961655,
+      "valid_rows": 32768,
+      "verdict": "ok"
+    },
+    {
+      "case": "sonic_bf16",
+      "case_label": "Sonic BF16",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 3.232884115966783e-08
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 2.9699489090262432e-08
+        },
+        "max_deepseek_calc_diff": 3.232884115966783e-08,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "bf16_grouped_source",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "down_deepseek_calc_diff": 3.232884115966783e-08,
+      "down_min_ms": 8.773590625,
+      "down_ms": 8.977303125,
+      "down_valid_tflops": 275.5728672686431,
+      "error_tail": "",
+      "finite": {
+        "sonic_dw1": true,
+        "sonic_dw2": true
+      },
+      "gate_up_deepseek_calc_diff": 2.9699489090262432e-08,
+      "gate_up_min_ms": 17.6318359375,
+      "gate_up_ms": 17.792297916666666,
+      "gate_up_valid_tflops": 278.08675125416045,
+      "gpu_memory_peak_bytes": 6573800448,
+      "gpu_memory_peak_gb": 6.573800448,
+      "implementation_provenance": {
+        "case": "sonic_bf16",
+        "module_paths": {
+          "quack": "fp8-cu13-venv/lib64/python3.12/site-packages/quack/__init__.py",
+          "sonicmoe": "fp8-cu13-venv/lib64/python3.12/site-packages/sonicmoe/__init__.py"
+        },
+        "packages": {
+          "quack-kernels": "0.4.0",
+          "sonic-moe": "0.1.2.post1"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_16k_sonic_bf16/run.log",
+      "max_deepseek_calc_diff": 3.232884115966783e-08,
+      "max_rows_per_expert": 22976,
+      "median_rows_per_expert": 2028,
+      "min_rows_per_expert": 884,
+      "padded_rows": 66432,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_16k_sonic_bf16/results.json",
+      "route_stats": {
+        "experts": 16,
+        "max_rows_per_expert": 22976,
+        "median_rows_per_expert": 2028,
+        "min_rows_per_expert": 884,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 66432,
+        "padding_overhead_ratio": 1.013671875,
+        "tma_rows": 66432,
+        "total_blocks": 519,
+        "valid_rows": 65536,
+        "wgmma_rows": 65760
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_16k_sonic_bf16",
+      "speed_vs_sonic": 1.0,
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_16k_sonic_bf16/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          8.773590625,
+          8.89101875,
+          9.2673
+        ],
+        "gate_up": [
+          17.6318359375,
+          17.8569359375,
+          17.888121875
+        ],
+        "total": [
+          27.488165625,
+          27.520109375,
+          27.552896875
+        ]
+      },
+      "token_label": "16k",
+      "tokens": 16384,
+      "total_min_ms": 27.488165625,
+      "total_ms": 27.520390625,
+      "total_p90_ms": 27.552896875,
+      "total_p95_ms": 27.552896875,
+      "total_std_ms": 0.0264271704603731,
+      "total_valid_tflops": 269.6801651044152,
+      "valid_rows": 65536,
+      "verdict": "ok"
+    },
+    {
+      "case": "custom_cute_fp8_bf16_out",
+      "case_label": "Custom CuTe FP8 BF16-out",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 2.4158739675428365e-07
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 2.3713646724043969e-07
+        },
+        "max_deepseek_calc_diff": 2.4158739675428365e-07,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "down_deepseek_calc_diff": 2.4158739675428365e-07,
+      "down_min_ms": 5.19644921875,
+      "down_ms": 5.2023421875,
+      "down_valid_tflops": 475.53603229718345,
+      "error_tail": "",
+      "finite": {
+        "custom_down": true,
+        "custom_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 2.3713646724043969e-07,
+      "gate_up_min_ms": 10.4488859375,
+      "gate_up_ms": 10.457027083333333,
+      "gate_up_valid_tflops": 473.1557339923054,
+      "gpu_memory_peak_bytes": 6927313920,
+      "gpu_memory_peak_gb": 6.92731392,
+      "implementation_provenance": {
+        "case": "custom_cute_fp8_bf16_out",
+        "custom_layout_mode": "padded",
+        "custom_tuned_config": "default",
+        "module_paths": {
+          "quack": "fp8-cu13-venv/lib64/python3.12/site-packages/quack/__init__.py"
+        },
+        "packages": {
+          "cuda-python": "<missing>",
+          "nvidia-cutlass-dsl": "4.4.2",
+          "quack-kernels": "0.4.0"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_16k_custom_cute_fp8_bf16_out/run.log",
+      "max_deepseek_calc_diff": 2.4158739675428365e-07,
+      "max_rows_per_expert": 22976,
+      "median_rows_per_expert": 2028,
+      "min_rows_per_expert": 884,
+      "padded_rows": 66432,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_16k_custom_cute_fp8_bf16_out/results.json",
+      "route_stats": {
+        "experts": 16,
+        "max_rows_per_expert": 22976,
+        "median_rows_per_expert": 2028,
+        "min_rows_per_expert": 884,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 66432,
+        "padding_overhead_ratio": 1.013671875,
+        "tma_rows": 66432,
+        "total_blocks": 519,
+        "valid_rows": 65536,
+        "wgmma_rows": 65760
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_16k_custom_cute_fp8_bf16_out",
+      "speed_vs_sonic": 1.752676166275653,
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_16k_custom_cute_fp8_bf16_out/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          5.19644921875,
+          5.199300390625,
+          5.211276953125
+        ],
+        "gate_up": [
+          10.4488859375,
+          10.45154765625,
+          10.47064765625
+        ],
+        "total": [
+          15.646365625,
+          15.6928421875,
+          15.76656875
+        ]
+      },
+      "token_label": "16k",
+      "tokens": 16384,
+      "total_min_ms": 15.646365625,
+      "total_ms": 15.701925520833333,
+      "total_p90_ms": 15.76656875,
+      "total_p95_ms": 15.76656875,
+      "total_std_ms": 0.0494912653793557,
+      "total_valid_tflops": 472.6619978957915,
+      "valid_rows": 65536,
+      "verdict": "ok"
+    },
+    {
+      "case": "sonic_bf16",
+      "case_label": "Sonic BF16",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 6.15964588224216e-08
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 7.061707030242559e-08
+        },
+        "max_deepseek_calc_diff": 7.061707030242559e-08,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "bf16_grouped_source",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "down_deepseek_calc_diff": 6.15964588224216e-08,
+      "down_min_ms": 17.114715625,
+      "down_ms": 17.20384479166667,
+      "down_valid_tflops": 287.5986376829356,
+      "error_tail": "",
+      "finite": {
+        "sonic_dw1": true,
+        "sonic_dw2": true
+      },
+      "gate_up_deepseek_calc_diff": 7.061707030242559e-08,
+      "gate_up_min_ms": 36.161190625,
+      "gate_up_ms": 36.23829791666667,
+      "gate_up_valid_tflops": 273.0703487437479,
+      "gpu_memory_peak_bytes": 10909932544,
+      "gpu_memory_peak_gb": 10.909932544,
+      "implementation_provenance": {
+        "case": "sonic_bf16",
+        "module_paths": {
+          "quack": "fp8-cu13-venv/lib64/python3.12/site-packages/quack/__init__.py",
+          "sonicmoe": "fp8-cu13-venv/lib64/python3.12/site-packages/sonicmoe/__init__.py"
+        },
+        "packages": {
+          "quack-kernels": "0.4.0",
+          "sonic-moe": "0.1.2.post1"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_32k_sonic_bf16/run.log",
+      "max_deepseek_calc_diff": 7.061707030242559e-08,
+      "max_rows_per_expert": 45612,
+      "median_rows_per_expert": 4149,
+      "min_rows_per_expert": 1774,
+      "padded_rows": 132096,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_32k_sonic_bf16/results.json",
+      "route_stats": {
+        "experts": 16,
+        "max_rows_per_expert": 45612,
+        "median_rows_per_expert": 4149,
+        "min_rows_per_expert": 1774,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 132096,
+        "padding_overhead_ratio": 1.0078125,
+        "tma_rows": 132096,
+        "total_blocks": 1032,
+        "valid_rows": 131072,
+        "wgmma_rows": 131360
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_32k_sonic_bf16",
+      "speed_vs_sonic": 1.0,
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_32k_sonic_bf16/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          17.114715625,
+          17.2158859375,
+          17.2809328125
+        ],
+        "gate_up": [
+          36.161190625,
+          36.257478125,
+          36.296225
+        ],
+        "total": [
+          53.7928375,
+          53.8110375,
+          53.9620625
+        ]
+      },
+      "token_label": "32k",
+      "tokens": 32768,
+      "total_min_ms": 53.7928375,
+      "total_ms": 53.8553125,
+      "total_p90_ms": 53.9620625,
+      "total_p95_ms": 53.9620625,
+      "total_std_ms": 0.07584845362080214,
+      "total_valid_tflops": 275.61639299699544,
+      "valid_rows": 131072,
+      "verdict": "ok"
+    },
+    {
+      "case": "custom_cute_fp8_bf16_out",
+      "case_label": "Custom CuTe FP8 BF16-out",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 2.407556586314641e-07
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 2.3481466837615983e-07
+        },
+        "max_deepseek_calc_diff": 2.407556586314641e-07,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "down_deepseek_calc_diff": 2.407556586314641e-07,
+      "down_min_ms": 10.61806171875,
+      "down_ms": 10.658655729166666,
+      "down_valid_tflops": 464.20509778289255,
+      "error_tail": "",
+      "finite": {
+        "custom_down": true,
+        "custom_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 2.3481466837615983e-07,
+      "gate_up_min_ms": 21.94578125,
+      "gate_up_ms": 21.958875,
+      "gate_up_valid_tflops": 450.64260577939444,
+      "gpu_memory_peak_bytes": 11603123200,
+      "gpu_memory_peak_gb": 11.6031232,
+      "implementation_provenance": {
+        "case": "custom_cute_fp8_bf16_out",
+        "custom_layout_mode": "padded",
+        "custom_tuned_config": "default",
+        "module_paths": {
+          "quack": "fp8-cu13-venv/lib64/python3.12/site-packages/quack/__init__.py"
+        },
+        "packages": {
+          "cuda-python": "<missing>",
+          "nvidia-cutlass-dsl": "4.4.2",
+          "quack-kernels": "0.4.0"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_32k_custom_cute_fp8_bf16_out/run.log",
+      "max_deepseek_calc_diff": 2.407556586314641e-07,
+      "max_rows_per_expert": 45612,
+      "median_rows_per_expert": 4149,
+      "min_rows_per_expert": 1774,
+      "padded_rows": 132096,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_32k_custom_cute_fp8_bf16_out/results.json",
+      "route_stats": {
+        "experts": 16,
+        "max_rows_per_expert": 45612,
+        "median_rows_per_expert": 4149,
+        "min_rows_per_expert": 1774,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 132096,
+        "padding_overhead_ratio": 1.0078125,
+        "tma_rows": 132096,
+        "total_blocks": 1032,
+        "valid_rows": 131072,
+        "wgmma_rows": 131360
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_32k_custom_cute_fp8_bf16_out",
+      "speed_vs_sonic": 1.6499579796238035,
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep8/skewed/sonic_custom/tokens_32k_custom_cute_fp8_bf16_out/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          10.61806171875,
+          10.624575,
+          10.73333046875
+        ],
+        "gate_up": [
+          21.94578125,
+          21.96348125,
+          21.9673625
+        ],
+        "total": [
+          32.6205875,
+          32.64710625,
+          32.65355
+        ]
+      },
+      "token_label": "32k",
+      "tokens": 32768,
+      "total_min_ms": 32.6205875,
+      "total_ms": 32.64041458333333,
+      "total_p90_ms": 32.65355,
+      "total_p95_ms": 32.65355,
+      "total_std_ms": 0.01426453419372412,
+      "total_valid_tflops": 454.7554669405228,
+      "valid_rows": 131072,
+      "verdict": "ok"
+    }
+  ],
+  "selected_cases": [
+    "sonic_bf16",
+    "custom_cute_fp8_bf16_out"
+  ],
+  "status": "ok"
+}

@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "sm90-fp8-wgrad/scripts/benchmark_wgrad.py", line 744, in run_one_case
+    down_fn()
+  File "sm90-fp8-wgrad/scripts/benchmark_wgrad.py", line 736, in <lambda>
+    down_fn = lambda: run_deepgemm_wgrad(
+                      ^^^^^^^^^^^^^^^^^^^
+  File "sm90-fp8-wgrad/src/sm90_fp8_wgrad/deepgemm_baseline.py", line 83, in run_deepgemm_wgrad
+    fn(
+RuntimeError: CUDA driver error (csrc/apis/../jit_kernels/impls/../../jit/handle.hpp:178): 1 (CUDA_ERROR_INVALID_VALUE, invalid argument)

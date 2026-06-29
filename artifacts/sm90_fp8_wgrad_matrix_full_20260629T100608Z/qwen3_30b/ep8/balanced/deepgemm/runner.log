@@ -1,0 +1,17 @@
+
+================================================================================
+model=qwen3_30b route=balanced ep=8 kind=deepgemm device=5
+global_experts=128 local_experts=16 global_tokens=4096,8192 local_tokens=4096,8192
+output=artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep8/balanced/deepgemm
+command: CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=5 python sm90-fp8-wgrad/scripts/sweep_seq_lens.py --tokens-list 4096\,8192 --experts 16 --top-k 8 --hidden 2048 --intermediate 768 --route balanced --seed 1234 --warmup-iters 500 --active-iters 5000 --repeat 3 --custom-layout-mode padded --custom-tuned-config default --deepseek-diff-gate 0.001 --output-dir artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep8/balanced/deepgemm --results-json artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep8/balanced/deepgemm/results.json --no-include-sonic --no-include-custom --include-deepgemm --isolate-cases
+# Wgrad Sequence-Length Sweep
+
+created_at: `2026-06-29T10:09:38.420443+00:00`
+deepseek_diff_gate: `0.001`
+results_json: `artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep8/balanced/deepgemm/results.json`
+
+| tokens | case | status | total ms | speed vs Sonic | total valid TFLOP/s | max DeepSeek calc_diff |
+| ---: | --- | --- | ---: | ---: | ---: | ---: |
+| 4096 | DeepGEMM FP8 | ok | 0.913022 |  | 338.697 | 7.464666e-09 |
+| 8192 | DeepGEMM FP8 | ok | 1.483495 |  | 416.904 | 1.617187e-08 |
+

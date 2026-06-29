@@ -1,0 +1,256 @@
+{
+  "command": [
+    "fp8-cu13-venv/bin/python",
+    "sm90-fp8-wgrad/scripts/sweep_seq_lens.py",
+    "--tokens-list",
+    "4096,8192",
+    "--experts",
+    "8",
+    "--top-k",
+    "4",
+    "--hidden",
+    "6144",
+    "--intermediate",
+    "3072",
+    "--route",
+    "skewed",
+    "--seed",
+    "1234",
+    "--warmup-iters",
+    "500",
+    "--active-iters",
+    "5000",
+    "--repeat",
+    "3",
+    "--custom-layout-mode",
+    "padded",
+    "--custom-tuned-config",
+    "default",
+    "--deepseek-diff-gate",
+    "0.001",
+    "--output-dir",
+    "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm",
+    "--results-json",
+    "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/results.json",
+    "--no-include-sonic",
+    "--no-include-custom",
+    "--include-deepgemm",
+    "--isolate-cases"
+  ],
+  "created_at": "2026-06-29T16:43:54.743085+00:00",
+  "deepgemm_metric": "deep_gemm.testing.calc_diff",
+  "deepseek_diff_gate": 0.001,
+  "execution_mode": "isolated_per_case_process",
+  "output_paths": {
+    "output_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm",
+    "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/results.json",
+    "summary_csv": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/summary.csv",
+    "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/summary.json",
+    "summary_md": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/summary.md"
+  },
+  "require_deepgemm_calc_diff": true,
+  "rows": [
+    {
+      "case": "deepgemm_fp8",
+      "case_label": "DeepGEMM FP8",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 9.119255572898055e-09
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 6.424897058820989e-09
+        },
+        "max_deepseek_calc_diff": 9.119255572898055e-09,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands_deepgemm_padded",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+      "down_deepseek_calc_diff": 9.119255572898055e-09,
+      "down_min_ms": 1.7643208984375,
+      "down_ms": 1.7648032552083333,
+      "down_valid_tflops": 350.4499942408536,
+      "error_tail": "",
+      "finite": {
+        "deepgemm_down": true,
+        "deepgemm_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 6.424897058820989e-09,
+      "gate_up_min_ms": 3.509683984375,
+      "gate_up_ms": 3.5121786458333335,
+      "gate_up_valid_tflops": 352.1889704316305,
+      "gpu_memory_peak_bytes": 4053300736,
+      "gpu_memory_peak_gb": 4.053300736,
+      "implementation_provenance": {
+        "case": "deepgemm_fp8",
+        "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+        "module_paths": {
+          "deep_gemm": "fp8-cu13-venv/lib64/python3.12/site-packages/deep_gemm/__init__.py"
+        },
+        "packages": {
+          "deep_gemm": "2.5.0+local"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9",
+        "stage_execution": "streamed_down_then_gate_up"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/tokens_4k_deepgemm_fp8/run.log",
+      "max_deepseek_calc_diff": 9.119255572898055e-09,
+      "max_rows_per_expert": 6694,
+      "median_rows_per_expert": 1372,
+      "min_rows_per_expert": 616,
+      "padded_rows": 16896,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/tokens_4k_deepgemm_fp8/results.json",
+      "route_stats": {
+        "experts": 8,
+        "max_rows_per_expert": 6694,
+        "median_rows_per_expert": 1372,
+        "min_rows_per_expert": 616,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 16896,
+        "padding_overhead_ratio": 1.03125,
+        "tma_rows": 16896,
+        "total_blocks": 132,
+        "valid_rows": 16384,
+        "wgmma_rows": 16544
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/tokens_4k_deepgemm_fp8",
+      "speed_vs_sonic": null,
+      "stage_execution": "streamed_down_then_gate_up",
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/tokens_4k_deepgemm_fp8/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          1.7643208984375,
+          1.7648697265625,
+          1.765219140625
+        ],
+        "gate_up": [
+          3.509683984375,
+          3.51277734375,
+          3.514074609375
+        ],
+        "total": [
+          5.2740048828125,
+          5.2776470703125,
+          5.27929375
+        ]
+      },
+      "token_label": "4k",
+      "tokens": 4096,
+      "total_min_ms": 5.2740048828125,
+      "total_ms": 5.276981901041666,
+      "total_p90_ms": 5.27929375,
+      "total_p95_ms": 5.27929375,
+      "total_std_ms": 0.002209806424538659,
+      "total_timing_mode": "sum_down_gate_up_repeats",
+      "total_valid_tflops": 351.6073973090077,
+      "valid_rows": 16384,
+      "verdict": "ok"
+    },
+    {
+      "case": "deepgemm_fp8",
+      "case_label": "DeepGEMM FP8",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 6.872344804342845e-09
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 8.708289533920777e-09
+        },
+        "max_deepseek_calc_diff": 8.708289533920777e-09,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands_deepgemm_padded",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+      "down_deepseek_calc_diff": 6.872344804342845e-09,
+      "down_min_ms": 3.1528162109375,
+      "down_ms": 3.4455176432291665,
+      "down_valid_tflops": 359.0028289881924,
+      "error_tail": "",
+      "finite": {
+        "deepgemm_down": true,
+        "deepgemm_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 8.708289533920777e-09,
+      "gate_up_min_ms": 6.74971640625,
+      "gate_up_ms": 6.913267447916667,
+      "gate_up_valid_tflops": 357.8483229723041,
+      "gpu_memory_peak_bytes": 5590627840,
+      "gpu_memory_peak_gb": 5.59062784,
+      "implementation_provenance": {
+        "case": "deepgemm_fp8",
+        "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+        "module_paths": {
+          "deep_gemm": "fp8-cu13-venv/lib64/python3.12/site-packages/deep_gemm/__init__.py"
+        },
+        "packages": {
+          "deep_gemm": "2.5.0+local"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9",
+        "stage_execution": "streamed_down_then_gate_up"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/tokens_8k_deepgemm_fp8/run.log",
+      "max_deepseek_calc_diff": 8.708289533920777e-09,
+      "max_rows_per_expert": 13503,
+      "median_rows_per_expert": 2762,
+      "min_rows_per_expert": 1182,
+      "padded_rows": 33280,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/tokens_8k_deepgemm_fp8/results.json",
+      "route_stats": {
+        "experts": 8,
+        "max_rows_per_expert": 13503,
+        "median_rows_per_expert": 2762,
+        "min_rows_per_expert": 1182,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 33280,
+        "padding_overhead_ratio": 1.015625,
+        "tma_rows": 33280,
+        "total_blocks": 260,
+        "valid_rows": 32768,
+        "wgmma_rows": 32896
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/tokens_8k_deepgemm_fp8",
+      "speed_vs_sonic": null,
+      "stage_execution": "streamed_down_then_gate_up",
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/minimax_m3/ep16/skewed/deepgemm/tokens_8k_deepgemm_fp8/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          3.1528162109375,
+          3.591712890625,
+          3.592023828125
+        ],
+        "gate_up": [
+          6.74971640625,
+          6.99345625,
+          6.9966296875
+        ],
+        "total": [
+          9.9025326171875,
+          10.585169140625,
+          10.588653515625
+        ]
+      },
+      "token_label": "8k",
+      "tokens": 8192,
+      "total_min_ms": 9.9025326171875,
+      "total_ms": 10.358785091145833,
+      "total_p90_ms": 10.588653515625,
+      "total_p95_ms": 10.588653515625,
+      "total_std_ms": 0.3226223542700348,
+      "total_timing_mode": "sum_down_gate_up_repeats",
+      "total_valid_tflops": 358.232332372244,
+      "valid_rows": 32768,
+      "verdict": "ok"
+    }
+  ],
+  "selected_cases": [
+    "deepgemm_fp8"
+  ],
+  "status": "ok"
+}

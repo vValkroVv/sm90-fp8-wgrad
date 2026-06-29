@@ -1,0 +1,16 @@
+# Wgrad Benchmark Summary
+
+status: `ok`
+tokens: `8192`
+route: `balanced`
+valid_rows: `65536`
+source_hash: `ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9`
+deepseek_diff_gate: `0.001`
+results_json: `artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep1/balanced/sonic_custom/tokens_8k_custom_cute_fp8_bf16_out/results.json`
+
+| case | status | down ms | gate/up ms | total ms | speed vs Sonic | total valid TFLOP/s | max DeepSeek calc_diff |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Custom CuTe FP8 BF16-out | ok | 0.597913 | 1.109593 | 1.703338 |  | 363.096 | 2.436099e-07 |
+
+$ fp8-cu13-venv/bin/python sm90-fp8-wgrad/scripts/benchmark_wgrad.py --tokens 8192 --experts 128 --top-k 8 --hidden 2048 --intermediate 768 --route balanced --seed 1234 --warmup-iters 500 --active-iters 5000 --repeat 3 --custom-layout-mode padded --custom-tuned-config default --deepseek-diff-gate 0.001 --output-dir artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep1/balanced/sonic_custom/tokens_8k_custom_cute_fp8_bf16_out --results-json artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep1/balanced/sonic_custom/tokens_8k_custom_cute_fp8_bf16_out/results.json --no-include-sonic --no-include-deepgemm --include-custom --require-deepgemm-calc-diff
+

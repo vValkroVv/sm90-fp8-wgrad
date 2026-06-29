@@ -6,6 +6,7 @@ import csv
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 from statistics import mean
 from typing import Any
 
@@ -20,6 +21,7 @@ CASE_LABELS = {
 }
 
 TOKEN_ORDER = [4096, 8192, 16384, 32768]
+PROJECT_DIR_NAME = "sm90-fp8-wgrad"
 
 
 def parse_args() -> argparse.Namespace:
@@ -40,6 +42,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--readme",
         help="Optional README path. The generated block replaces SM90_WGRAD_RESULTS markers.",
+    )
+    parser.add_argument(
+        "--standalone-output",
+        action="store_true",
+        help="Write --output as a standalone Markdown document instead of a README marker block.",
     )
     return parser.parse_args()
 
@@ -128,6 +135,80 @@ def load_matrix_rows(matrix_path: Path) -> tuple[Path, list[dict[str, str]]]:
     return root, rows
 
 
+def resolve_artifact_path(root: Path, raw_path: str) -> Path:
+    path = Path(raw_path or "")
+    if not raw_path:
+        return path
+    if path.exists():
+        return path
+    parts = path.parts
+    if root.name in parts:
+        suffix = Path(*parts[parts.index(root.name) + 1 :])
+        relocated = root / suffix
+        if relocated.exists():
+            return relocated
+    if not path.is_absolute():
+        relocated = root / path
+        if relocated.exists():
+            return relocated
+    return path
+
+
+def artifact_display_root(root: Path) -> Path:
+    if root.parent.name == "artifacts":
+        return Path(root.parent.name, root.name)
+    return Path(root.name)
+
+
+def relative_artifact_path(root: Path, raw_path: Any) -> str:
+    if raw_path in (None, ""):
+        return ""
+    text = str(raw_path)
+    path = Path(text)
+    parts = path.parts
+    display_root = artifact_display_root(root)
+    if root.name in parts:
+        return Path(display_root, *parts[parts.index(root.name) + 1 :]).as_posix()
+    try:
+        return Path(display_root, path.relative_to(root)).as_posix()
+    except ValueError:
+        return text
+
+
+def relative_embedded_paths(root: Path, raw_text: Any) -> str:
+    if raw_text in (None, ""):
+        return ""
+    text = str(raw_text)
+    replacements = (
+        (root.name, artifact_display_root(root).as_posix()),
+        (PROJECT_DIR_NAME, PROJECT_DIR_NAME),
+    )
+    for marker, replacement in replacements:
+        text = re.sub(
+            rf"(?<![\w.-])/(?:[^/\s\"'`|<>]+/)+{re.escape(marker)}/",
+            f"{replacement}/",
+            text,
+        )
+    return text
+
+
+def make_row_paths_relative(root: Path, row: dict[str, Any]) -> None:
+    for key in (
+        "output_dir",
+        "results_json",
+        "summary_json",
+        "log_path",
+        "error_log_path",
+        "source_results_json",
+        "missing_results_json",
+    ):
+        if key in row:
+            row[key] = relative_artifact_path(root, row.get(key))
+    for key in ("error", "error_tail"):
+        if key in row:
+            row[key] = relative_embedded_paths(root, row.get(key))
+
+
 def global_token_map(manifest_row: dict[str, str]) -> dict[int, int]:
     global_tokens = parse_token_list(manifest_row.get("global_tokens", ""))
     local_tokens = parse_token_list(manifest_row.get("local_tokens", ""))
@@ -139,28 +220,30 @@ def global_token_map(manifest_row: dict[str, str]) -> dict[int, int]:
 
 def load_result_rows(root: Path, manifest_rows: list[dict[str, str]]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for manifest_row in manifest_rows:
+    for raw_manifest_row in manifest_rows:
+        manifest_row = dict(raw_manifest_row)
+        for key in ("output_dir", "results_json"):
+            if key in manifest_row:
+                manifest_row[key] = relative_artifact_path(root, manifest_row.get(key))
         token_map = global_token_map(manifest_row)
         local_by_global = {global_token: local_token for local_token, global_token in token_map.items()}
-        results_json = Path(manifest_row.get("results_json") or "")
-        if results_json and not results_json.is_absolute():
-            results_json = root / results_json
+        results_json = resolve_artifact_path(root, raw_manifest_row.get("results_json") or "")
 
         if manifest_row.get("run_kind") == "deepgemm_skipped":
             for global_token in parse_token_list(manifest_row.get("global_tokens", "")):
                 local_token = local_by_global.get(global_token, global_token)
-                rows.append(
-                    {
-                        **manifest_row,
-                        "case": "deepgemm_fp8",
-                        "case_label": CASE_LABELS["deepgemm_fp8"],
-                        "status": "skipped",
-                        "tokens": local_token,
-                        "global_tokens_value": global_token,
-                        "token_label": token_label(global_token),
-                        "error_tail": "Skipped by DeepGEMM local token cap.",
-                    }
-                )
+                row = {
+                    **manifest_row,
+                    "case": "deepgemm_fp8",
+                    "case_label": CASE_LABELS["deepgemm_fp8"],
+                    "status": "skipped",
+                    "tokens": local_token,
+                    "global_tokens_value": global_token,
+                    "token_label": token_label(global_token),
+                    "error_tail": "Skipped by DeepGEMM local token cap.",
+                }
+                make_row_paths_relative(root, row)
+                rows.append(row)
             continue
 
         if not results_json.exists():
@@ -173,20 +256,20 @@ def load_result_rows(root: Path, manifest_rows: list[dict[str, str]]) -> list[di
             for global_token in parse_token_list(manifest_row.get("global_tokens", "")) or [0]:
                 local_token = local_by_global.get(global_token, global_token)
                 for case in cases:
-                    rows.append(
-                        {
-                            **manifest_row,
-                            "case": case,
-                            "case_label": CASE_LABELS.get(case, case),
-                            "status": "missing",
-                            "tokens": local_token,
-                            "global_tokens_value": global_token or "",
-                            "local_tokens_value": local_token or "",
-                            "token_label": token_label(global_token) if global_token else "",
-                            "error_tail": "Missing results file.",
-                            "missing_results_json": str(results_json),
-                        }
-                    )
+                    row = {
+                        **manifest_row,
+                        "case": case,
+                        "case_label": CASE_LABELS.get(case, case),
+                        "status": "missing",
+                        "tokens": local_token,
+                        "global_tokens_value": global_token or "",
+                        "local_tokens_value": local_token or "",
+                        "token_label": token_label(global_token) if global_token else "",
+                        "error_tail": "Missing results file.",
+                        "missing_results_json": str(results_json),
+                    }
+                    make_row_paths_relative(root, row)
+                    rows.append(row)
             continue
 
         payload = json.loads(results_json.read_text(encoding="utf-8"))
@@ -194,18 +277,18 @@ def load_result_rows(root: Path, manifest_rows: list[dict[str, str]]) -> list[di
             local_token = as_int(result_row.get("tokens"))
             global_token = token_map.get(local_token or -1, local_token)
             case = str(result_row.get("case") or "")
-            rows.append(
-                {
-                    **manifest_row,
-                    **result_row,
-                    "case": case,
-                    "case_label": CASE_LABELS.get(case, str(result_row.get("case_label") or case)),
-                    "global_tokens_value": global_token,
-                    "token_label": token_label(global_token),
-                    "local_tokens_value": local_token,
-                    "source_results_json": str(results_json),
-                }
-            )
+            row = {
+                **manifest_row,
+                **result_row,
+                "case": case,
+                "case_label": CASE_LABELS.get(case, str(result_row.get("case_label") or case)),
+                "global_tokens_value": global_token,
+                "token_label": token_label(global_token),
+                "local_tokens_value": local_token,
+                "source_results_json": str(results_json),
+            }
+            make_row_paths_relative(root, row)
+            rows.append(row)
     return rows
 
 
@@ -331,9 +414,24 @@ def speed_matrix(rows: list[dict[str, Any]]) -> list[str]:
     return lines
 
 
-def detailed_custom_table(rows: list[dict[str, Any]]) -> list[str]:
+def sonic_custom_comparison_table(rows: list[dict[str, Any]]) -> list[str]:
+    by_key: dict[tuple[str, str, str, int | None, str], dict[str, Any]] = {}
+    custom_rows = [row for row in rows if row.get("case") == "custom_cute_fp8_bf16_out"]
+    for row in rows:
+        case = str(row.get("case") or "")
+        if case not in ("sonic_bf16", "custom_cute_fp8_bf16_out"):
+            continue
+        key = (
+            str(row.get("model_key")),
+            str(row.get("route")),
+            str(row.get("ep")),
+            as_int(row.get("global_tokens_value")),
+            case,
+        )
+        by_key[key] = row
+
     custom = sorted(
-        [row for row in rows if row.get("case") == "custom_cute_fp8_bf16_out"],
+        custom_rows,
         key=lambda row: (
             str(row.get("model_key")),
             int(row.get("ep") or 0),
@@ -342,10 +440,17 @@ def detailed_custom_table(rows: list[dict[str, Any]]) -> list[str]:
         ),
     )
     lines = [
-        "| model | route | EP | tokens | status | custom ms | speed vs Sonic | TFLOP/s | max calc_diff |",
-        "| --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: |",
+        "| model | route | EP | tokens | Sonic ms | Custom ms | speed vs Sonic | custom TFLOP/s | max calc_diff | status |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
     ]
     for row in custom:
+        base_key = (
+            str(row.get("model_key")),
+            str(row.get("route")),
+            str(row.get("ep")),
+            as_int(row.get("global_tokens_value")),
+        )
+        sonic = by_key.get((*base_key, "sonic_bf16"), {})
         lines.append(
             "| "
             + " | ".join(
@@ -354,11 +459,12 @@ def detailed_custom_table(rows: list[dict[str, Any]]) -> list[str]:
                     str(row.get("route")),
                     str(row.get("ep")),
                     token_label(as_int(row.get("global_tokens_value"))),
-                    str(row.get("status")),
+                    format_ms(sonic.get("total_ms")),
                     format_ms(row.get("total_ms")),
                     format_speed(row.get("speed_vs_sonic")),
                     format_tflops(row.get("total_valid_tflops")),
                     format_diff(row.get("max_deepseek_calc_diff")),
+                    str(row.get("status")),
                 ]
             )
             + " |"
@@ -416,7 +522,7 @@ def render_markdown(root: Path, rows: list[dict[str, Any]]) -> str:
     lines: list[str] = [
         RESULTS_BEGIN,
         "",
-        f"Generated at `{generated_at}` from matrix artifact `{root.name}`.",
+        f"Generated at `{generated_at}` from matrix artifact `{artifact_display_root(root).as_posix()}`.",
         "",
         "### run status",
         "",
@@ -464,9 +570,9 @@ def render_markdown(root: Path, rows: list[dict[str, Any]]) -> str:
             "",
             *speed_matrix(rows),
             "",
-            "### custom rows",
+            "### Sonic BF16 vs custom CuTe FP8",
             "",
-            *detailed_custom_table(rows),
+            *sonic_custom_comparison_table(rows),
             "",
             "### DeepGEMM public baseline",
             "",
@@ -489,6 +595,24 @@ def update_readme(path: Path, block: str) -> None:
     path.write_text(text[:begin] + block.rstrip() + text[end:] + ("\n" if text.endswith("\n") else ""), encoding="utf-8")
 
 
+def standalone_markdown(root: Path, block: str) -> str:
+    artifact = artifact_display_root(root).as_posix()
+    body = block.replace(f"{RESULTS_BEGIN}\n\n", "").replace(f"\n{RESULTS_END}\n", "\n")
+    header = "\n".join(
+        [
+            "# benchmark results",
+            "",
+            f"Source artifact: `{artifact}`.",
+            "",
+            f"Run manifests: `{artifact}/matrix_runs.tsv` and `{artifact}/matrix_jobs.tsv`.",
+            "",
+            "Correctness gate: max DeepSeek `calc_diff <= 1e-3`. Failed DeepGEMM rows are baseline diagnostics and are not used for custom speedup claims.",
+            "",
+        ]
+    )
+    return header + "\n" + body.lstrip()
+
+
 def main() -> int:
     args = parse_args()
     root, manifest_rows = load_matrix_rows(Path(args.input))
@@ -500,7 +624,8 @@ def main() -> int:
     markdown = render_markdown(root, rows)
 
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(markdown, encoding="utf-8")
+    output_text = standalone_markdown(root, markdown) if args.standalone_output else markdown
+    output.write_text(output_text, encoding="utf-8")
     write_csv(csv_output, rows)
     if args.readme:
         update_readme(Path(args.readme), markdown)

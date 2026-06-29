@@ -1,0 +1,35 @@
+# Wgrad Benchmark Summary
+
+status: `failed`
+tokens: `8192`
+route: `skewed`
+valid_rows: `81920`
+source_hash: `ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9`
+deepseek_diff_gate: `0.001`
+results_json: `artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/results.json`
+
+| case | status | down ms | gate/up ms | total ms | speed vs Sonic | total valid TFLOP/s | max DeepSeek calc_diff |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| DeepGEMM FP8 | failed |  |  |  |  |  |  |
+
+## Failures
+
+### DeepGEMM FP8
+
+log: `artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/logs/deepgemm_fp8.error.log`
+
+```text
+Traceback (most recent call last):
+  File "sm90-fp8-wgrad/scripts/benchmark_wgrad.py", line 744, in run_one_case
+    down_fn()
+  File "sm90-fp8-wgrad/scripts/benchmark_wgrad.py", line 736, in <lambda>
+    down_fn = lambda: run_deepgemm_wgrad(
+                      ^^^^^^^^^^^^^^^^^^^
+  File "sm90-fp8-wgrad/src/sm90_fp8_wgrad/deepgemm_baseline.py", line 83, in run_deepgemm_wgrad
+    fn(
+RuntimeError: CUDA driver error (csrc/apis/../jit_kernels/impls/../../jit/handle.hpp:178): 1 (CUDA_ERROR_INVALID_VALUE, invalid argument)
+```
+
+
+$ fp8-cu13-venv/bin/python sm90-fp8-wgrad/scripts/benchmark_wgrad.py --tokens 8192 --experts 512 --top-k 10 --hidden 4096 --intermediate 1024 --route skewed --seed 1234 --warmup-iters 500 --active-iters 5000 --repeat 3 --custom-layout-mode padded --custom-tuned-config default --deepseek-diff-gate 0.001 --output-dir artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8 --results-json artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/results.json --no-include-sonic --include-deepgemm --no-include-custom --require-deepgemm-calc-diff
+

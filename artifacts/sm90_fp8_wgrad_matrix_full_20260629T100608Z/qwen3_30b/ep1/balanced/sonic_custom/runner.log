@@ -1,0 +1,23 @@
+
+================================================================================
+model=qwen3_30b route=balanced ep=1 kind=sonic_custom device=1
+global_experts=128 local_experts=128 global_tokens=4096,8192,16384,32768 local_tokens=4096,8192,16384,32768
+output=artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep1/balanced/sonic_custom
+command: CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=1 python sm90-fp8-wgrad/scripts/sweep_seq_lens.py --tokens-list 4096\,8192\,16384\,32768 --experts 128 --top-k 8 --hidden 2048 --intermediate 768 --route balanced --seed 1234 --warmup-iters 500 --active-iters 5000 --repeat 3 --custom-layout-mode padded --custom-tuned-config default --deepseek-diff-gate 0.001 --output-dir artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep1/balanced/sonic_custom --results-json artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep1/balanced/sonic_custom/results.json --include-sonic --include-custom --no-include-deepgemm --isolate-cases
+# Wgrad Sequence-Length Sweep
+
+created_at: `2026-06-29T10:22:23.826026+00:00`
+deepseek_diff_gate: `0.001`
+results_json: `artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep1/balanced/sonic_custom/results.json`
+
+| tokens | case | status | total ms | speed vs Sonic | total valid TFLOP/s | max DeepSeek calc_diff |
+| ---: | --- | --- | ---: | ---: | ---: | ---: |
+| 4096 | Sonic BF16 | ok | 1.443680 | 1.0000x | 214.201 | 6.210555e-10 |
+| 4096 | Custom CuTe FP8 BF16-out | ok | 1.075213 | 1.3427x | 287.606 | 2.461869e-07 |
+| 8192 | Sonic BF16 | ok | 2.438512 | 1.0000x | 253.628 | 1.397083e-09 |
+| 8192 | Custom CuTe FP8 BF16-out | ok | 1.703338 | 1.4316x | 363.096 | 2.436099e-07 |
+| 16384 | Sonic BF16 | ok | 4.653739 | 1.0000x | 265.797 | 2.018607e-09 |
+| 16384 | Custom CuTe FP8 BF16-out | ok | 2.962222 | 1.5710x | 417.575 | 2.397501e-07 |
+| 32768 | Sonic BF16 | ok | 8.890301 | 1.0000x | 278.270 | 6.207447e-09 |
+| 32768 | Custom CuTe FP8 BF16-out | ok | 5.436136 | 1.6354x | 455.084 | 2.409421e-07 |
+

@@ -1,0 +1,203 @@
+{
+  "command": [
+    "fp8-cu13-venv/bin/python",
+    "sm90-fp8-wgrad/scripts/sweep_seq_lens.py",
+    "--tokens-list",
+    "4096,8192",
+    "--experts",
+    "512",
+    "--top-k",
+    "10",
+    "--hidden",
+    "4096",
+    "--intermediate",
+    "1024",
+    "--route",
+    "skewed",
+    "--seed",
+    "1234",
+    "--warmup-iters",
+    "500",
+    "--active-iters",
+    "5000",
+    "--repeat",
+    "3",
+    "--custom-layout-mode",
+    "padded",
+    "--custom-tuned-config",
+    "default",
+    "--deepseek-diff-gate",
+    "0.001",
+    "--output-dir",
+    "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm",
+    "--results-json",
+    "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/results.json",
+    "--no-include-sonic",
+    "--no-include-custom",
+    "--include-deepgemm",
+    "--isolate-cases"
+  ],
+  "created_at": "2026-06-29T17:24:45.446456+00:00",
+  "deepgemm_metric": "deep_gemm.testing.calc_diff",
+  "deepseek_diff_gate": 0.001,
+  "execution_mode": "isolated_per_case_process",
+  "output_paths": {
+    "output_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm",
+    "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/results.json",
+    "summary_csv": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/summary.csv",
+    "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/summary.json",
+    "summary_md": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/summary.md"
+  },
+  "require_deepgemm_calc_diff": true,
+  "rows": [
+    {
+      "case": "deepgemm_fp8",
+      "case_label": "DeepGEMM FP8",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 0.0005365063778028922
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 6.408544472868982e-09
+        },
+        "max_deepseek_calc_diff": 0.0005365063778028922,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands_deepgemm_padded",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+      "down_deepseek_calc_diff": 0.0005365063778028922,
+      "down_min_ms": 15.12291875,
+      "down_ms": 15.123661458333334,
+      "down_valid_tflops": 22.719193009353784,
+      "error_tail": "",
+      "finite": {
+        "deepgemm_down": true,
+        "deepgemm_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 6.408544472868982e-09,
+      "gate_up_min_ms": 30.1993875,
+      "gate_up_ms": 30.201123958333334,
+      "gate_up_valid_tflops": 22.753946783837616,
+      "gpu_memory_peak_bytes": 37617210368,
+      "gpu_memory_peak_gb": 37.617210368,
+      "implementation_provenance": {
+        "case": "deepgemm_fp8",
+        "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+        "module_paths": {
+          "deep_gemm": "fp8-cu13-venv/lib64/python3.12/site-packages/deep_gemm/__init__.py"
+        },
+        "packages": {
+          "deep_gemm": "2.5.0+local"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9",
+        "stage_execution": "streamed_down_then_gate_up"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_4k_deepgemm_fp8/run.log",
+      "max_deepseek_calc_diff": 0.0005365063778028922,
+      "max_rows_per_expert": 8802,
+      "median_rows_per_expert": 15,
+      "min_rows_per_expert": 2,
+      "padded_rows": 93696,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_4k_deepgemm_fp8/results.json",
+      "route_stats": {
+        "experts": 512,
+        "max_rows_per_expert": 8802,
+        "median_rows_per_expert": 15,
+        "min_rows_per_expert": 2,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 93696,
+        "padding_overhead_ratio": 2.2875,
+        "tma_rows": 93696,
+        "total_blocks": 732,
+        "valid_rows": 40960,
+        "wgmma_rows": 50304
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_4k_deepgemm_fp8",
+      "speed_vs_sonic": null,
+      "stage_execution": "streamed_down_then_gate_up",
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_4k_deepgemm_fp8/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          15.12291875,
+          15.1232796875,
+          15.1247859375
+        ],
+        "gate_up": [
+          30.1993875,
+          30.201325,
+          30.202659375
+        ],
+        "total": [
+          45.32230625,
+          45.3246046875,
+          45.327445312500004
+        ]
+      },
+      "token_label": "4k",
+      "tokens": 4096,
+      "total_min_ms": 45.32230625,
+      "total_ms": 45.324785416666664,
+      "total_p90_ms": 45.327445312500004,
+      "total_p95_ms": 45.327445312500004,
+      "total_std_ms": 0.002101902014605993,
+      "total_timing_mode": "sum_down_gate_up_repeats",
+      "total_valid_tflops": 22.74235038432109,
+      "valid_rows": 40960,
+      "verdict": "ok"
+    },
+    {
+      "case": "deepgemm_fp8",
+      "case_label": "DeepGEMM FP8",
+      "error": "Traceback (most recent call last):\n  File \"sm90-fp8-wgrad/scripts/benchmark_wgrad.py\", line 744, in run_one_case\n    down_fn()\n  File \"sm90-fp8-wgrad/scripts/benchmark_wgrad.py\", line 736, in <lambda>\n    down_fn = lambda: run_deepgemm_wgrad(\n                      ^^^^^^^^^^^^^^^^^^^\n  File \"sm90-fp8-wgrad/src/sm90_fp8_wgrad/deepgemm_baseline.py\", line 83, in run_deepgemm_wgrad\n    fn(\nRuntimeError: CUDA driver error (csrc/apis/../jit_kernels/impls/../../jit/handle.hpp:178): 1 (CUDA_ERROR_INVALID_VALUE, invalid argument)\n",
+      "error_log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/logs/deepgemm_fp8.error.log",
+      "error_tail": "Traceback (most recent call last):\n  File \"sm90-fp8-wgrad/scripts/benchmark_wgrad.py\", line 744, in run_one_case\n    down_fn()\n  File \"sm90-fp8-wgrad/scripts/benchmark_wgrad.py\", line 736, in <lambda>\n    down_fn = lambda: run_deepgemm_wgrad(\n                      ^^^^^^^^^^^^^^^^^^^\n  File \"sm90-fp8-wgrad/src/sm90_fp8_wgrad/deepgemm_baseline.py\", line 83, in run_deepgemm_wgrad\n    fn(\nRuntimeError: CUDA driver error (csrc/apis/../jit_kernels/impls/../../jit/handle.hpp:178): 1 (CUDA_ERROR_INVALID_VALUE, invalid argument)",
+      "gpu_memory_peak_bytes": 22187351040,
+      "gpu_memory_peak_gb": 22.18735104,
+      "implementation_provenance": {
+        "case": "deepgemm_fp8",
+        "module_paths": {
+          "deep_gemm": "fp8-cu13-venv/lib64/python3.12/site-packages/deep_gemm/__init__.py"
+        },
+        "packages": {
+          "deep_gemm": "2.5.0+local"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/run.log",
+      "max_rows_per_expert": 17722,
+      "median_rows_per_expert": 31,
+      "min_rows_per_expert": 7,
+      "padded_rows": 128000,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/results.json",
+      "route_stats": {
+        "experts": 512,
+        "max_rows_per_expert": 17722,
+        "median_rows_per_expert": 31,
+        "min_rows_per_expert": 7,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 128000,
+        "padding_overhead_ratio": 1.5625,
+        "tma_rows": 128000,
+        "total_blocks": 1000,
+        "valid_rows": 81920,
+        "wgmma_rows": 89792
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8",
+      "speed_vs_sonic": null,
+      "status": "failed",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep1/skewed/deepgemm/tokens_8k_deepgemm_fp8/summary.json",
+      "token_label": "8k",
+      "tokens": 8192,
+      "valid_rows": 81920,
+      "verdict": "failed"
+    }
+  ],
+  "selected_cases": [
+    "deepgemm_fp8"
+  ],
+  "status": "ok"
+}

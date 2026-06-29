@@ -1,0 +1,16 @@
+# Wgrad Sequence-Length Sweep
+
+created_at: `2026-06-29T10:24:58.749008+00:00`
+deepseek_diff_gate: `0.001`
+results_json: `artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_30b/ep8/skewed/sonic_custom/results.json`
+
+| tokens | case | status | total ms | speed vs Sonic | total valid TFLOP/s | max DeepSeek calc_diff |
+| ---: | --- | --- | ---: | ---: | ---: | ---: |
+| 4096 | Sonic BF16 | ok | 0.966361 | 1.0000x | 320.002 | 1.148587e-08 |
+| 4096 | Custom CuTe FP8 BF16-out | ok | 0.831333 | 1.1624x | 371.978 | 2.521697e-07 |
+| 8192 | Sonic BF16 | ok | 1.794783 | 1.0000x | 344.596 | 2.979197e-08 |
+| 8192 | Custom CuTe FP8 BF16-out | ok | 1.521040 | 1.1800x | 406.613 | 2.408266e-07 |
+| 16384 | Sonic BF16 | ok | 3.731180 | 1.0000x | 331.517 | 6.954308e-08 |
+| 16384 | Custom CuTe FP8 BF16-out | ok | 2.965349 | 1.2583x | 417.135 | 2.217278e-07 |
+| 32768 | Sonic BF16 | ok | 9.591555 | 1.0000x | 257.925 | 1.496552e-07 |
+| 32768 | Custom CuTe FP8 BF16-out | ok | 5.885711 | 1.6296x | 420.323 | 2.650850e-07 |

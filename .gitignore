@@ -6,7 +6,11 @@ __pycache__/
 .ruff_cache/
 build/
 dist/
-artifacts/
+artifacts/*
+!artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/
+!artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/**
+!artifacts/sm90_fp8_dense_matmul_20260629T201037Z/
+!artifacts/sm90_fp8_dense_matmul_20260629T201037Z/**
 *.ncu-rep
 *.nsys-rep
 *.sqlite

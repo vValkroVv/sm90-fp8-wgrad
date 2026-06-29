@@ -1,0 +1,256 @@
+{
+  "command": [
+    "fp8-cu13-venv/bin/python",
+    "sm90-fp8-wgrad/scripts/sweep_seq_lens.py",
+    "--tokens-list",
+    "4096,8192",
+    "--experts",
+    "64",
+    "--top-k",
+    "10",
+    "--hidden",
+    "4096",
+    "--intermediate",
+    "1024",
+    "--route",
+    "skewed",
+    "--seed",
+    "1234",
+    "--warmup-iters",
+    "500",
+    "--active-iters",
+    "5000",
+    "--repeat",
+    "3",
+    "--custom-layout-mode",
+    "padded",
+    "--custom-tuned-config",
+    "default",
+    "--deepseek-diff-gate",
+    "0.001",
+    "--output-dir",
+    "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm",
+    "--results-json",
+    "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/results.json",
+    "--no-include-sonic",
+    "--no-include-custom",
+    "--include-deepgemm",
+    "--isolate-cases"
+  ],
+  "created_at": "2026-06-29T17:59:57.820908+00:00",
+  "deepgemm_metric": "deep_gemm.testing.calc_diff",
+  "deepseek_diff_gate": 0.001,
+  "execution_mode": "isolated_per_case_process",
+  "output_paths": {
+    "output_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm",
+    "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/results.json",
+    "summary_csv": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/summary.csv",
+    "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/summary.json",
+    "summary_md": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/summary.md"
+  },
+  "require_deepgemm_calc_diff": true,
+  "rows": [
+    {
+      "case": "deepgemm_fp8",
+      "case_label": "DeepGEMM FP8",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 0.00010473609962635688
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 3.3579894420654455e-09
+        },
+        "max_deepseek_calc_diff": 0.00010473609962635688,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands_deepgemm_padded",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+      "down_deepseek_calc_diff": 0.00010473609962635688,
+      "down_min_ms": 2.212927734375,
+      "down_ms": 2.2137537760416666,
+      "down_valid_tflops": 155.21029818156836,
+      "error_tail": "",
+      "finite": {
+        "deepgemm_down": true,
+        "deepgemm_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 3.3579894420654455e-09,
+      "gate_up_min_ms": 4.29603515625,
+      "gate_up_ms": 4.2965703125,
+      "gate_up_valid_tflops": 159.94030526179128,
+      "gpu_memory_peak_bytes": 6395852288,
+      "gpu_memory_peak_gb": 6.395852288,
+      "implementation_provenance": {
+        "case": "deepgemm_fp8",
+        "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+        "module_paths": {
+          "deep_gemm": "fp8-cu13-venv/lib64/python3.12/site-packages/deep_gemm/__init__.py"
+        },
+        "packages": {
+          "deep_gemm": "2.5.0+local"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9",
+        "stage_execution": "streamed_down_then_gate_up"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/tokens_4k_deepgemm_fp8/run.log",
+      "max_deepseek_calc_diff": 0.00010473609962635688,
+      "max_rows_per_expert": 11301,
+      "median_rows_per_expert": 206,
+      "min_rows_per_expert": 85,
+      "padded_rows": 44288,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/tokens_4k_deepgemm_fp8/results.json",
+      "route_stats": {
+        "experts": 64,
+        "max_rows_per_expert": 11301,
+        "median_rows_per_expert": 206,
+        "min_rows_per_expert": 85,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 44288,
+        "padding_overhead_ratio": 1.08125,
+        "tma_rows": 44288,
+        "total_blocks": 346,
+        "valid_rows": 40960,
+        "wgmma_rows": 41760
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/tokens_4k_deepgemm_fp8",
+      "speed_vs_sonic": null,
+      "stage_execution": "streamed_down_then_gate_up",
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/tokens_4k_deepgemm_fp8/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          2.212927734375,
+          2.2130662109375,
+          2.2152673828125
+        ],
+        "gate_up": [
+          4.29603515625,
+          4.29683046875,
+          4.2968453125
+        ],
+        "total": [
+          6.508962890625,
+          6.5098966796874995,
+          6.5121126953125
+        ]
+      },
+      "token_label": "4k",
+      "tokens": 4096,
+      "total_min_ms": 6.508962890625,
+      "total_ms": 6.510324088541666,
+      "total_p90_ms": 6.5121126953125,
+      "total_p95_ms": 6.5121126953125,
+      "total_std_ms": 0.001320940609014376,
+      "total_timing_mode": "sum_down_gate_up_repeats",
+      "total_valid_tflops": 158.33192587973,
+      "valid_rows": 40960,
+      "verdict": "ok"
+    },
+    {
+      "case": "deepgemm_fp8",
+      "case_label": "DeepGEMM FP8",
+      "correctness": {
+        "deepseek_diff_gate": 0.001,
+        "down": {
+          "deepseek_calc_diff": 4.898183969537229e-09
+        },
+        "gate_up": {
+          "deepseek_calc_diff": 1.1239039476862445e-08
+        },
+        "max_deepseek_calc_diff": 1.1239039476862445e-08,
+        "metric": "deep_gemm.testing.calc_diff",
+        "reference": "dequantized_fp8_operands_deepgemm_padded",
+        "reference_mode": "streamed_by_expert"
+      },
+      "correctness_status": "deepseek_calc_diff_ok",
+      "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+      "down_deepseek_calc_diff": 4.898183969537229e-09,
+      "down_min_ms": 2.8130408203125,
+      "down_ms": 2.8149767578125,
+      "down_valid_tflops": 244.12093828228072,
+      "error_tail": "",
+      "finite": {
+        "deepgemm_down": true,
+        "deepgemm_gate_up": true
+      },
+      "gate_up_deepseek_calc_diff": 1.1239039476862445e-08,
+      "gate_up_min_ms": 5.44303359375,
+      "gate_up_ms": 5.444545963541667,
+      "gate_up_valid_tflops": 252.43418715230428,
+      "gpu_memory_peak_bytes": 8348962304,
+      "gpu_memory_peak_gb": 8.348962304,
+      "implementation_provenance": {
+        "case": "deepgemm_fp8",
+        "deepgemm_api": "k_grouped_fp8_gemm_nt_contiguous",
+        "module_paths": {
+          "deep_gemm": "fp8-cu13-venv/lib64/python3.12/site-packages/deep_gemm/__init__.py"
+        },
+        "packages": {
+          "deep_gemm": "2.5.0+local"
+        },
+        "source_hash": "ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9",
+        "stage_execution": "streamed_down_then_gate_up"
+      },
+      "log_path": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/tokens_8k_deepgemm_fp8/run.log",
+      "max_deepseek_calc_diff": 1.1239039476862445e-08,
+      "max_rows_per_expert": 22294,
+      "median_rows_per_expert": 414,
+      "min_rows_per_expert": 169,
+      "padded_rows": 85504,
+      "results_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/tokens_8k_deepgemm_fp8/results.json",
+      "route_stats": {
+        "experts": 64,
+        "max_rows_per_expert": 22294,
+        "median_rows_per_expert": 414,
+        "min_rows_per_expert": 169,
+        "packed_tail_tma_mode": "masked128",
+        "padded_rows": 85504,
+        "padding_overhead_ratio": 1.04375,
+        "tma_rows": 85504,
+        "total_blocks": 668,
+        "valid_rows": 81920,
+        "wgmma_rows": 82752
+      },
+      "run_dir": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/tokens_8k_deepgemm_fp8",
+      "speed_vs_sonic": null,
+      "stage_execution": "streamed_down_then_gate_up",
+      "status": "ok",
+      "summary_json": "artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/qwen3_5_397b_a17b/ep8/skewed/deepgemm/tokens_8k_deepgemm_fp8/summary.json",
+      "timing_repeats_ms": {
+        "down": [
+          2.8130408203125,
+          2.815705078125,
+          2.816184375
+        ],
+        "gate_up": [
+          5.44303359375,
+          5.444981640625,
+          5.44562265625
+        ],
+        "total": [
+          8.2560744140625,
+          8.26068671875,
+          8.261807031250001
+        ]
+      },
+      "token_label": "8k",
+      "tokens": 8192,
+      "total_min_ms": 8.2560744140625,
+      "total_ms": 8.259522721354166,
+      "total_p90_ms": 8.261807031250001,
+      "total_p95_ms": 8.261807031250001,
+      "total_std_ms": 0.0024808456095637803,
+      "total_timing_mode": "sum_down_gate_up_repeats",
+      "total_valid_tflops": 249.60089966820735,
+      "valid_rows": 81920,
+      "verdict": "ok"
+    }
+  ],
+  "selected_cases": [
+    "deepgemm_fp8"
+  ],
+  "status": "ok"
+}

@@ -1,0 +1,16 @@
+# Wgrad Benchmark Summary
+
+status: `ok`
+tokens: `4096`
+route: `balanced`
+valid_rows: `32768`
+source_hash: `ba59545ccbe6a65f58b73e19c021e2056e1fcab3782f55388a64227e8e16abc9`
+deepseek_diff_gate: `0.001`
+results_json: `artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/deepseek_v3/ep1/balanced/deepgemm/tokens_4k_deepgemm_fp8/results.json`
+
+| case | status | down ms | gate/up ms | total ms | speed vs Sonic | total valid TFLOP/s | max DeepSeek calc_diff |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| DeepGEMM FP8 | ok | 25.782220 | 51.689756 | 77.471977 |  | 37.255 | 8.760602e-09 |
+
+$ fp8-cu13-venv/bin/python sm90-fp8-wgrad/scripts/benchmark_wgrad.py --tokens 4096 --experts 256 --top-k 8 --hidden 7168 --intermediate 2048 --route balanced --seed 1234 --warmup-iters 500 --active-iters 5000 --repeat 3 --custom-layout-mode padded --custom-tuned-config default --deepseek-diff-gate 0.001 --output-dir artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/deepseek_v3/ep1/balanced/deepgemm/tokens_4k_deepgemm_fp8 --results-json artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/deepseek_v3/ep1/balanced/deepgemm/tokens_4k_deepgemm_fp8/results.json --no-include-sonic --include-deepgemm --no-include-custom --require-deepgemm-calc-diff
+

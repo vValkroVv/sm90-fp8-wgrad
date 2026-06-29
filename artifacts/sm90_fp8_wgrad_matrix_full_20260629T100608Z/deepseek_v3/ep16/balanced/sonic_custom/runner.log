@@ -1,0 +1,23 @@
+
+================================================================================
+model=deepseek_v3 route=balanced ep=16 kind=sonic_custom device=2
+global_experts=256 local_experts=16 global_tokens=4096,8192,16384,32768 local_tokens=4096,8192,16384,32768
+output=artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/deepseek_v3/ep16/balanced/sonic_custom
+command: CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=2 python sm90-fp8-wgrad/scripts/sweep_seq_lens.py --tokens-list 4096\,8192\,16384\,32768 --experts 16 --top-k 8 --hidden 7168 --intermediate 2048 --route balanced --seed 1234 --warmup-iters 500 --active-iters 5000 --repeat 3 --custom-layout-mode padded --custom-tuned-config default --deepseek-diff-gate 0.001 --output-dir artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/deepseek_v3/ep16/balanced/sonic_custom --results-json artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/deepseek_v3/ep16/balanced/sonic_custom/results.json --include-sonic --include-custom --no-include-deepgemm --isolate-cases
+# Wgrad Sequence-Length Sweep
+
+created_at: `2026-06-29T15:17:27.613968+00:00`
+deepseek_diff_gate: `0.001`
+results_json: `artifacts/sm90_fp8_wgrad_matrix_full_20260629T100608Z/deepseek_v3/ep16/balanced/sonic_custom/results.json`
+
+| tokens | case | status | total ms | speed vs Sonic | total valid TFLOP/s | max DeepSeek calc_diff |
+| ---: | --- | --- | ---: | ---: | ---: | ---: |
+| 4096 | Sonic BF16 | ok | 10.245901 | 1.0000x | 281.695 | 8.781470e-09 |
+| 4096 | Custom CuTe FP8 BF16-out | ok | 6.079332 | 1.6854x | 474.759 | 2.407649e-07 |
+| 8192 | Sonic BF16 | ok | 19.197508 | 1.0000x | 300.687 | 1.170563e-08 |
+| 8192 | Custom CuTe FP8 BF16-out | ok | 11.731578 | 1.6364x | 492.043 | 2.393265e-07 |
+| 16384 | Sonic BF16 | ok | 37.528390 | 1.0000x | 307.630 | 2.314884e-08 |
+| 16384 | Custom CuTe FP8 BF16-out | ok | 23.973721 | 1.5654x | 481.564 | 2.390694e-07 |
+| 32768 | Sonic BF16 | ok | 73.769796 | 1.0000x | 312.997 | 4.533372e-08 |
+| 32768 | Custom CuTe FP8 BF16-out | ok | 46.862976 | 1.5742x | 492.708 | 2.432873e-07 |
+
